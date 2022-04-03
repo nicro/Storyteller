@@ -1,38 +1,26 @@
-import { Client, Intents, Collection, TextChannel } from "discord.js";
-import config from "./config"
-import * as commandModules from "./commands"
-
-const {Bot} = require("./entities");
-
-const bot = Bot.Instance();
-
-const commands = Object(commandModules);
+import {Client, Intents} from 'discord.js';
+import config from './config'
+import fs from 'fs';
 
 const client = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
+    intents: [
+        Intents.FLAGS.GUILDS, 
+        Intents.FLAGS.GUILD_MESSAGES, 
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+    ]
 });
 
-client.once("ready", () => {
-    console.log("bot ready");
-})
+function loadEvents() {
+    const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.ts'));
 
-client.on("messageReactionAdd", async (reaction, user) => {
-    var channel = reaction.message.channel as TextChannel;
-
-    var session = bot.get_session_by_id(channel.id);
-
-    if (session && reaction.message.reactions.cache.size > 1)
-        reaction.remove();
-});
-
-client.on("interactionCreate", async interaction => {
-    if (!interaction.isCommand()) {
-        return;
+    for (const file of eventFiles) {
+        const event = require(`./events/${file}`);
+        if (event.once)
+            client.once(event.name, (...args) => event.execute(...args));
+        else
+            client.on(event.name, (...args) => event.execute(...args));
     }
+}
 
-    const { commandName } = interaction;
-
-    commands[commandName].execute(interaction, client);
-})
-
+loadEvents();
 client.login(config.DISCORD_TOKEN);

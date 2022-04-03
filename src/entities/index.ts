@@ -1,2 +1,3 @@
-export {GameSession} from "./GameSession"
-export {Bot} from "./Bot"
+export { GameSession } from './gameSession'
+export { Bot } from './bot'
+export { Player } from './player'

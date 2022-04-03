@@ -1,6 +1,5 @@
-import { CommandInteraction } from "discord.js";
-
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { CommandInteraction } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 export const data = new SlashCommandBuilder()
 	.setName('ping')
