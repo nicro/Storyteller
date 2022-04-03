@@ -8,19 +8,42 @@ class GameSession {
     joinMessage?: Message<boolean>;
 
     players: Map<string, Player>;
+
     playersLimit: number = 5;
 
     constructor() {
         this.players = new Map<string, Player>();
     }
 
-    async print_join_message() {
-        this.joinMessage = await this.sysChannel?.send("Check to join!");
-        await this.joinMessage?.react("✅");
-        await this.update_active_players();
+    getPlayerById(id: string): Player | undefined {
+        for (let [_, value] of this.players) {
+            if (value.user.id == id)
+                return value;
+        }
     }
 
-    async create_sub_channels(interaction: CommandInteraction, name: string) {
+    getCreator(): Player {
+        for (let [_, value] of this.players) {
+            if (value.isCreator)
+                return value;
+        }
+        throw new Error("no creator in a room");
+    }
+
+    startGame() {
+        this.chatChannel?.send("Game is starting....");
+        this.getCreator().user.send("Please write what is the main goal of the story!");
+    }
+
+    async printJoinMessage() {
+        this.joinMessage = await this.sysChannel?.send("Check to join!");
+        await this.joinMessage?.react("✅");
+        await this.updateActivePlayers();
+    }
+
+    async init(interaction: CommandInteraction, name: string) {
+        this.players.set(interaction.user.id, new Player(interaction.user, true));
+
         this.categoryChannel = await interaction.guild?.channels.create(name, {
             type: "GUILD_CATEGORY",
             permissionOverwrites: [
@@ -52,7 +75,7 @@ class GameSession {
         });
     }
 
-    async update_active_players() {
+    async updateActivePlayers() {
         if (!this.joinMessage)
             return;
 
@@ -72,25 +95,25 @@ class GameSession {
         await this.joinMessage.edit(newMessage)
     }
 
-    async add_player(id: string) {
+    async addPlayer(id: string) {
         if (this.players.has(id))
             return;
 
         let user = await this.chatChannel?.client.users.fetch(id);
         if (!user) return;
         this.players.set(id, new Player(user));
-        await this.update_active_players();
+        await this.updateActivePlayers();
     }
 
-    async remove_player(id: string) {
+    async removePlayer(id: string) {
         if (!this.players.has(id))
             return;
 
         let user = await this.chatChannel?.client.users.fetch(id);
-        if (!user) return;
+        if (!user || this.players.get(id)?.isCreator) return;
 
         this.players.delete(id);
-        await this.update_active_players();
+        await this.updateActivePlayers();
     }
 }
 

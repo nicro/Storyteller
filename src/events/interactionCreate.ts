@@ -6,11 +6,10 @@ const commands = Object(commandModules);
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction: Interaction) {
-        if (!interaction.isCommand()) {
+        if (interaction.isCommand()) {
+            const { commandName } = interaction;
+            commands[commandName].execute(interaction, interaction.client);
             return;
         }
-    
-        const { commandName } = interaction;
-        commands[commandName].execute(interaction, interaction.client);
 	},
 };

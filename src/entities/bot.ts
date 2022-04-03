@@ -1,4 +1,4 @@
-import { GameSession } from '.'
+import { GameSession, Player } from '.'
 import { CommandInteraction } from 'discord.js';
 
 class Bot {
@@ -14,15 +14,24 @@ class Bot {
         return this.instance || (this.instance = new this());
     }
     
-    async create_room(interaction: CommandInteraction, name: string) {
+    async createRoom(interaction: CommandInteraction, name: string) {
         var newgame = new GameSession();
-        await newgame.create_sub_channels(interaction, name);
-        await newgame.print_join_message();
+        await newgame.init(interaction, name);
+        await newgame.printJoinMessage();
         this.sessions.push(newgame);
     }
 
-    get_session_by_id(channelId: string): GameSession | undefined {
+    getSession(channelId: string): GameSession | undefined {
         return this.sessions.find((s: GameSession) => channelId == s.sysChannel?.id)
+    }
+
+    findPlayer(id: string) {
+        for (const session of this.sessions){
+            for (let [_, player] of session.players) {
+                if (player.user.id == id)
+                    return player;
+            }
+        }
     }
 }
 

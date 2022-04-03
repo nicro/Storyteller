@@ -12,13 +12,12 @@ export const data = new SlashCommandBuilder()
 	);
 
 export async function execute(interaction: CommandInteraction) {
-
 	if (!interaction.guild)
 		throw new Error("guild=null");
 
 	let opt = interaction.options.get('name_of_room');
 	let roomName = opt?.value as string || "new_room";
 
-	await Bot.Instance().create_room(interaction, roomName);
+	await Bot.Instance().createRoom(interaction, roomName);
 	interaction.reply("Channel created");
 }
