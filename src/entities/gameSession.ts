@@ -1,4 +1,5 @@
 import { CommandInteraction, CategoryChannel, TextChannel, Message } from 'discord.js';
+import { FirstStoryQuestion } from './../questions';
 import { Player } from '.';
 
 class GameSession {
@@ -32,7 +33,8 @@ class GameSession {
 
     startGame() {
         this.chatChannel?.send("Game is starting....");
-        this.getCreator().user.send("Please write what is the main goal of the story!");
+        //this.getCreator().user.send("Please write what is the main goal of the story!");
+        this.players.forEach((p: Player) => p.ask(new FirstStoryQuestion()));
     }
 
     async printJoinMessage() {
