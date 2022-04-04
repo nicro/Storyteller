@@ -24,15 +24,6 @@ class Bot {
     getSession(channelId: string): GameSession | undefined {
         return this.sessions.find((s: GameSession) => channelId == s.sysChannel?.id)
     }
-
-    findPlayer(id: string) {
-        for (const session of this.sessions){
-            for (let [_, player] of session.players) {
-                if (player.user.id == id)
-                    return player;
-            }
-        }
-    }
 }
 
 export {Bot};

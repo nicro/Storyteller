@@ -13,7 +13,8 @@ export async function execute(interaction: CommandInteraction) {
     let startFlag: boolean = false;
     await Bot.Instance().sessions.forEach((gs: GameSession) => {
         if (gs.sysChannel?.id == interaction.channelId && !startFlag) {
-            gs.startGame();
+            gs.chatChannel?.send("Game is starting....");
+            gs.phase.start();
             interaction.reply("Game started");
             startFlag = true
         }

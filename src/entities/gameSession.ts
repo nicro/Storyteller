@@ -1,6 +1,6 @@
 import { CommandInteraction, CategoryChannel, TextChannel, Message } from 'discord.js';
-import { FirstStoryQuestion } from './../questions';
 import { Player } from '.';
+import { Phase, GoalPhase } from './../phase';
 
 class GameSession {
     sysChannel?: TextChannel;
@@ -9,11 +9,13 @@ class GameSession {
     joinMessage?: Message<boolean>;
 
     players: Map<string, Player>;
+    phase: Phase;
 
     playersLimit: number = 5;
 
     constructor() {
         this.players = new Map<string, Player>();
+        this.phase = new GoalPhase(this);
     }
 
     getPlayerById(id: string): Player | undefined {
@@ -31,10 +33,22 @@ class GameSession {
         throw new Error("no creator in a room");
     }
 
-    startGame() {
-        this.chatChannel?.send("Game is starting....");
-        //this.getCreator().user.send("Please write what is the main goal of the story!");
-        this.players.forEach((p: Player) => p.ask(new FirstStoryQuestion()));
+    refreshProgress(): void {
+        if (this.phase?.finished())
+        {
+            if (this.phase.next)
+            {
+                this.phase = this.phase.next();
+                this.phase.start();
+            }
+        }
+    }
+
+    findPlayer(id: string) {
+        for (let [_, player] of this.players) {
+            if (player.user.id == id)
+                return player;
+        }
     }
 
     async printJoinMessage() {
