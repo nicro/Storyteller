@@ -1,11 +1,11 @@
 import { Phase, FirstPhase } from '.';
-import { GameSession } from './../entities'
-import { GoalQuestion } from './../questions';
+import { Session } from '../entities'
+import { GoalQuestion } from '../questions';
 
 export class GoalPhase implements Phase {
-    session: GameSession
+    session: Session
 
-    constructor(s: GameSession) {
+    constructor(s: Session) {
         this.session = s;
     }
 

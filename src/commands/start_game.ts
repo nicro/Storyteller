@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Bot, GameSession } from '../entities';
+import { Bot, Room } from '../entities';
 
 export const data = new SlashCommandBuilder()
 	.setName('start_game')
@@ -11,10 +11,10 @@ export async function execute(interaction: CommandInteraction) {
 		throw new Error("guild=null");
 
     let startFlag: boolean = false;
-    await Bot.Instance().sessions.forEach((gs: GameSession) => {
-        if (gs.sysChannel?.id == interaction.channelId && !startFlag) {
-            gs.chatChannel?.send("Game is starting....");
-            gs.phase.start();
+    await Bot.Instance().rooms.forEach((room: Room) => {
+        if (room.sysChannel?.id == interaction.channelId && !startFlag) {
+            room.chatChannel?.send("Game is starting....");
+            room.session.phase.start();
             interaction.reply("Game started");
             startFlag = true
         }

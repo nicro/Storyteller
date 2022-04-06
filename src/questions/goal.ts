@@ -5,9 +5,6 @@ export class GoalQuestion implements Question {
     isAnswered: boolean = false;
     response: string = "";
 
-    constructor() {
-    }
-
     get() : string {
         return 'Please specify the goal of the game!';
     }

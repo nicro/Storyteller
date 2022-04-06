@@ -1,12 +1,12 @@
-import { GameSession, Player } from '.'
+import { Room, Player } from '.'
 import { CommandInteraction } from 'discord.js';
 
 class Bot {
     private static instance: Bot
-    sessions: GameSession[]
+    rooms: Room[]
 
     constructor() {
-        this.sessions = [];
+        this.rooms = [];
     }
 
     public static Instance()
@@ -15,14 +15,14 @@ class Bot {
     }
     
     async createRoom(interaction: CommandInteraction, name: string) {
-        var newgame = new GameSession();
+        var newgame = new Room();
         await newgame.init(interaction, name);
         await newgame.printJoinMessage();
-        this.sessions.push(newgame);
+        this.rooms.push(newgame);
     }
 
-    getSession(channelId: string): GameSession | undefined {
-        return this.sessions.find((s: GameSession) => channelId == s.sysChannel?.id)
+    getSession(channelId: string): Room | undefined {
+        return this.rooms.find((s: Room) => channelId == s.sysChannel?.id)
     }
 }
 

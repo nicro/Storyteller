@@ -1,16 +1,15 @@
 import { Phase } from '.';
-import { GameSession, Player } from './../entities'
-import { FirstStoryQuestion } from './../questions';
+import { Session, Player } from '../entities'
+import { FirstStoryQuestion } from '../questions';
 
 export class FirstPhase implements Phase {
-    session: GameSession
+    session: Session
 
-    constructor(s: GameSession) {
+    constructor(s: Session) {
         this.session = s;
     }
 
     start(): void {
-        console.log('first phrase executed');
         this.session.players.forEach((p: Player) => p.ask(new FirstStoryQuestion()));
     }
 

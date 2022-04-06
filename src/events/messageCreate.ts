@@ -6,20 +6,14 @@ module.exports = {
 	async execute(msg: Message) {
         if (msg.channel.type == 'DM' && !msg.author.bot) {
 
-            for (const session of Bot.Instance().sessions) {
-                let player = session.findPlayer(msg.author.id);
+            for (const room of Bot.Instance().rooms) {
+                let player = room.session.findPlayer(msg.author.id);
                 if (player) {
                     player.handleMessage(msg.content);
-                    session.refreshProgress();
+                    room.session.refreshProgress();
                 }
                 else msg.reply('you are not in any of the games yes :(');
             }
-            //let player = Bot.Instance().findPlayer(msg.author.id);
-            //if (player) {
-            //    player.handleMessage(msg.content);
-            //    Bot.Instance().refreshProgress
-            //}
-            //else msg.reply("you are not in any of the games yes :(");
         }
 	},
 };
