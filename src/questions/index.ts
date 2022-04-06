@@ -1,3 +1,4 @@
 export { Question } from './question'
-export { FirstStoryQuestion } from './firstStory'
+export { StoryQuestion } from './story'
+export { LinkQuestion } from './link'
 export { GoalQuestion } from './goal'

@@ -2,7 +2,7 @@ import {  Player } from '.'
 import { Phase, GoalPhase } from '../phases';
 
 
-class Session {
+export class Session {
 
     playersLimit: number = 5;
     players: Map<string, Player>;
@@ -46,5 +46,3 @@ class Session {
         }
     }
 }
-
-export {Session};

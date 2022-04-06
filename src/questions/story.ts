@@ -1,6 +1,6 @@
 import { Question } from '.';
 
-export class FirstStoryQuestion implements Question {
+export class StoryQuestion implements Question {
 
     isAnswered: boolean = false;
     response: string = "";

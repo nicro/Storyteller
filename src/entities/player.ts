@@ -1,11 +1,11 @@
 import { User } from 'discord.js';
 import { Question } from './../questions'
 
-class Player {
+export class Player {
     user: User;
     isCreator?: boolean;
 
-    private questions: Question[];
+    questions: Question[];
     questionAsked: boolean = false;
 
     constructor(user: User, isCreator?: boolean) {
@@ -47,5 +47,3 @@ class Player {
         }
     }
 }
-
-export {Player};

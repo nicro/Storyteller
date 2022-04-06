@@ -1,3 +1,4 @@
 export { Phase } from './phase'
-export { GoalPhase } from './goalPhase'
-export { FirstPhase } from './firstPhase'
+export { GoalPhase } from './goal'
+export { StoryPhase } from './story'
+export { LinkPhase } from './link'

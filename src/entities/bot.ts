@@ -1,7 +1,7 @@
 import { Room, Player } from '.'
 import { CommandInteraction } from 'discord.js';
 
-class Bot {
+export class Bot {
     private static instance: Bot
     rooms: Room[]
 
@@ -25,5 +25,3 @@ class Bot {
         return this.rooms.find((s: Room) => channelId == s.sysChannel?.id)
     }
 }
-
-export {Bot};

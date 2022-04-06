@@ -1,8 +1,8 @@
-import { Phase } from '.';
+import { Phase, LinkPhase } from '.';
 import { Session, Player } from '../entities'
-import { FirstStoryQuestion } from '../questions';
+import { StoryQuestion } from '../questions';
 
-export class FirstPhase implements Phase {
+export class StoryPhase implements Phase {
     session: Session
 
     constructor(s: Session) {
@@ -10,7 +10,7 @@ export class FirstPhase implements Phase {
     }
 
     start(): void {
-        this.session.players.forEach((p: Player) => p.ask(new FirstStoryQuestion()));
+        this.session.players.forEach((p: Player) => p.ask(new StoryQuestion()));
     }
 
     finished(): boolean {
@@ -19,5 +19,9 @@ export class FirstPhase implements Phase {
                 return false;
         }
         return true;
+    }
+
+    next(): Phase { 
+        return new LinkPhase(this.session) 
     }
 }

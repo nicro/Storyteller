@@ -1,4 +1,4 @@
-import { Phase, FirstPhase } from '.';
+import { Phase, StoryPhase } from '.';
 import { Session } from '../entities'
 import { GoalQuestion } from '../questions';
 
@@ -18,6 +18,6 @@ export class GoalPhase implements Phase {
     }
 
     next(): Phase { 
-        return new FirstPhase(this.session) 
-    };
+        return new StoryPhase(this.session) 
+    }
 }

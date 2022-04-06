@@ -1,7 +1,7 @@
 import { CommandInteraction, CategoryChannel, TextChannel, Message } from 'discord.js';
 import { Player, Session } from '.';
 
-class Room {
+export class Room {
     sysChannel?: TextChannel;
     chatChannel?: TextChannel;
     categoryChannel?: CategoryChannel;
@@ -94,5 +94,3 @@ class Room {
         await this.updateActivePlayers();
     }
 }
-
-export {Room};
