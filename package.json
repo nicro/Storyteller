@@ -5,9 +5,7 @@
   "main": "src/main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node build/main.js",
-    "build": "npx tsc",
-    "postinstall": "npm run build",
+    "start": "npx tsc && node build/main.js",
     "deploy:commands": "npx tsc && node build/deployCommands.js"
   },
   "repository": {

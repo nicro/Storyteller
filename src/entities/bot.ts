@@ -17,7 +17,7 @@ export class Bot {
     async createRoom(interaction: CommandInteraction, name: string) {
         var newgame = new Room();
         await newgame.init(interaction, name);
-        await newgame.printJoinMessage();
+        await newgame.updateActivePlayers();
         this.rooms.push(newgame);
     }
 
