@@ -13,6 +13,12 @@ export class Room {
         this.session = new Session();
     }
 
+    delete() {
+        this.categoryChannel?.delete();
+        this.chatChannel?.delete();
+        this.sysChannel?.delete();
+    }
+
     async init(interaction: CommandInteraction, name: string) {
         this.session.players.set(interaction.user.id, new Player(interaction.user, true));
 

@@ -16,7 +16,7 @@ export async function execute(interaction: CommandInteraction) {
             room.chatChannel?.send("Game is starting....");
             room.session.phase.start();
             interaction.reply("Game started");
-            startFlag = true
+            startFlag = true;
         }
     })
 
