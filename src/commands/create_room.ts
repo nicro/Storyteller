@@ -1,15 +1,16 @@
-import { CommandInteraction } from 'discord.js';
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction, ApplicationCommandData, ApplicationCommand } from 'discord.js';
 import { Bot } from '../entities';
 
-export const data = new SlashCommandBuilder()
-	.setName('create_room')
-	.setDescription('Creates a new storyteller room!')
-	.addStringOption((option: any) => option
-		.setName('name_of_room')
-		.setDescription('some random description')
-		.setRequired(false)
-	);
+export const data: ApplicationCommandData = {
+	name: 'create_room',
+	description: 'Creates a new storyteller room!',
+	options: [{
+		type: 3,
+		name: 'name_of_room',
+		description: 'Name of the room',
+		required: false,
+	}]
+};
 
 export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guild)

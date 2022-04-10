@@ -1,14 +1,14 @@
-import { CommandInteraction } from 'discord.js';
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction, ApplicationCommandData } from 'discord.js';
 import { Bot, Room } from '../entities';
 
-export const data = new SlashCommandBuilder()
-	.setName('start_game')
-	.setDescription('Starts the game phase');
+export const data: ApplicationCommandData = {
+    name: 'start_game',
+    description: 'Starts the game phase'
+};
 
 export async function execute(interaction: CommandInteraction) {
-	if (!interaction.guild)
-		throw new Error("guild=null");
+    if (!interaction.guild)
+        throw new Error("guild=null");
 
     let startFlag: boolean = false;
     await Bot.Instance().rooms.forEach((room: Room) => {

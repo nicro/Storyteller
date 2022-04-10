@@ -8,7 +8,7 @@ module.exports = {
 	async execute(interaction: Interaction) {
         if (interaction.isCommand()) {
             const { commandName } = interaction;
-            commands[commandName].execute(interaction, interaction.client);
+            commands[commandName].execute(interaction);
             return;
         }
 	},
