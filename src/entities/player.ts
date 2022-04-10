@@ -1,4 +1,4 @@
-import { User } from 'discord.js';
+import { User, MessageEmbed } from 'discord.js';
 import { Question } from './../questions'
 
 export class Player {
@@ -17,10 +17,13 @@ export class Player {
     ask(question: Question) {
         this.questions.push(question);
         if (!this.questionAsked) {
-            for (let question of this.questions)
-            {
+            for (let question of this.questions) {
                 if (!question.isAnswered) {
-                    this.user.send(question.get());
+                    let embed = new MessageEmbed()
+                        .setColor('#0000ff')
+                        .setTitle(question.get())
+                        .setDescription('The next direct message to this bot will be considered as answer');
+                    this.user.send({ embeds: [embed] });
                     this.questionAsked = true;
                     break;
                 }
@@ -40,7 +43,12 @@ export class Player {
             }
             if (!question.isAnswered) {
                 let feedback: string = question.consume(msg);
-                this.user.send(feedback);
+
+                let embed = new MessageEmbed()
+                    .setColor('#00ff00')
+                    .setTitle(feedback);
+
+                this.user.send({ embeds: [embed] });
                 if (question.isAnswered)
                     this.questionAsked = false;
             }
