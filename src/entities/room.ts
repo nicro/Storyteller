@@ -72,7 +72,7 @@ export class Room {
             .setTitle('Check to join!')
             .setDescription('To start the game, the admin needs to type /start_game command!')
             .setAuthor({ name: 'Storyteller', iconURL: icon, url: 'https://discord.js.org' })
-            .addField('Active members:', newMessage)
+            .addField(`Active members (${this.session.players.size}/${this.session.playersLimit})`, newMessage)
             .setTimestamp();
 
         if (this.joinMessage) {
