@@ -38,6 +38,16 @@ export class Session {
             }
         }
     }
+    
+    toJson(): string {
+
+        let result = new Map<string, string>();
+        for (var [key, value] of this.players) {
+            result.set(key, value.questions.at(-1)?.response || 'no response');
+        }
+
+        return JSON.stringify(Object.fromEntries(result));
+    }
 
     findPlayer(id: string) {
         for (let [_, player] of this.players) {

@@ -2,6 +2,16 @@ import { Phase } from '.';
 import { Session, Player } from '../entities'
 import { LinkQuestion } from '../questions';
 
+// target: players
+// apply()
+
+/* function foo() {
+    ( async () => {
+        await async_foo();
+        flag
+    })()
+} */
+
 export class LinkPhase implements Phase {
     session: Session
 
