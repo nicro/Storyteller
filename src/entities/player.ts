@@ -14,6 +14,13 @@ export class Player {
         this.questions = [];
     }
 
+    toJson(): string {
+        return JSON.stringify({
+            type: this.isCreator ? 'creator' : 'player',
+            response: this.questions.at(-1)?.response || 'no response'
+        });
+    }
+
     ask(question: Question) {
         this.questions.push(question);
         if (!this.questionAsked) {

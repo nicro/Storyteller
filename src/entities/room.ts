@@ -9,8 +9,8 @@ export class Room {
 
     session: Session;
 
-    constructor() {
-        this.session = new Session();
+    constructor(playersNumber: number) {
+        this.session = new Session(playersNumber);
     }
 
     delete() {

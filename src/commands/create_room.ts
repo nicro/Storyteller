@@ -4,21 +4,29 @@ import { Bot } from '../entities';
 export const data: ApplicationCommandData = {
 	name: 'create_room',
 	description: 'Creates a new storyteller room!',
-	options: [{
-		type: 3,
-		name: 'name_of_room',
-		description: 'Name of the room',
-		required: false,
-	}]
+	options: [
+		{
+			type: 3,
+			name: 'name',
+			description: 'Name of the room',
+			required: false,
+		},
+		{
+			type: 3,
+			name: 'players_number',
+			description: 'Number of the players',
+			required: false,
+		},
+	]
 };
 
-export async function execute(interaction: CommandInteraction) {
-	if (!interaction.guild)
+export async function execute(handle: CommandInteraction) {
+	if (!handle.guild)
 		throw new Error("guild=null");
 
-	let opt = interaction.options.get('name_of_room');
-	let roomName = opt?.value as string || "new_room";
+	const roomName: string = handle.options.get('name')?.value as string || "new_room";
+	const playersNumber: number = handle.options.get('players_number')?.value as number || 3;
 
-	await Bot.Instance().createRoom(interaction, roomName);
-	interaction.reply("Channel created");
+	await Bot.Instance().createRoom(handle, roomName, playersNumber);
+	handle.reply("Channel created");
 }

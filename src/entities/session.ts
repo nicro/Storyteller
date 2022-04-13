@@ -8,7 +8,8 @@ export class Session {
     players: Map<string, Player>;
     phase: Phase;
 
-    constructor() {
+    constructor(playersNumber: number) {
+        this.playersLimit = playersNumber;
         this.players = new Map<string, Player>();
         this.phase = new GoalPhase(this);
     }
@@ -40,13 +41,9 @@ export class Session {
     }
     
     toJson(): string {
-
-        let result = new Map<string, string>();
-        for (var [key, value] of this.players) {
-            result.set(key, value.questions.at(-1)?.response || 'no response');
-        }
-
-        return JSON.stringify(Object.fromEntries(result));
+        let result: string[] = [];
+        this.players.forEach(player => result.push(player.toJson()));
+        return `[${result.join(',')}]`;
     }
 
     findPlayer(id: string) {
