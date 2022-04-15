@@ -6,9 +6,9 @@ module.exports = {
     async execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
         var channel = reaction.message.channel as TextChannel;
 
-        var session = Bot.Instance().getSession(channel.id);
-        if (session) {
-            await session.removePlayer(user.id);
+        var room = Bot.Instance().getRoom(channel.id);
+        if (room) {
+            await room.removePlayer(user.id);
         }
     },
 };

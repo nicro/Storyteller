@@ -2,7 +2,7 @@ import { CommandInteraction, ApplicationCommandData } from 'discord.js';
 import { Bot, Room } from '../entities';
 
 export const data: ApplicationCommandData = {
-    name: 'start_game',
+    name: 'start',
     description: 'Starts the game phase'
 };
 

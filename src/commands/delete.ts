@@ -1,8 +1,8 @@
-import { CommandInteraction, ApplicationCommandData, ApplicationCommand } from 'discord.js';
+import { CommandInteraction, ApplicationCommandData } from 'discord.js';
 import { Bot, Room } from '../entities';
 
 export const data: ApplicationCommandData = {
-	name: 'delete_room',
+	name: 'delete',
 	description: 'Delete a storyteller room!'
 };
 

@@ -6,12 +6,12 @@ module.exports = {
     async execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
         var channel = reaction.message.channel as TextChannel;
 
-        var session = Bot.Instance().getSession(channel.id);
-        if (session) {
+        var room = Bot.Instance().getRoom(channel.id);
+        if (room) {
             if (reaction.message.reactions.cache.size > 1)
                 reaction.remove();
             else
-                await session.addPlayer(user.id);
+                await room.addPlayer(user.id);
         }
     },
 };

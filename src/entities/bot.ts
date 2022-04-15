@@ -15,13 +15,14 @@ export class Bot {
     }
     
     async createRoom(interaction: CommandInteraction, name: string, playersNumber: number) {
-        var newgame = new Room(playersNumber);
-        await newgame.init(interaction, name);
+        var newgame = new Room(playersNumber, name);
+        await newgame.init(interaction);
         await newgame.updateActivePlayers();
         this.rooms.push(newgame);
+        return newgame;
     }
 
-    getSession(channelId: string): Room | undefined {
+    getRoom(channelId: string): Room | undefined {
         return this.rooms.find((s: Room) => channelId == s.sysChannel?.id)
     }
 }

@@ -7,10 +7,12 @@ export class Room {
     categoryChannel?: CategoryChannel;
     joinMessage?: Message<boolean>;
 
+    name: string
     session: Session;
 
-    constructor(playersNumber: number) {
+    constructor(playersNumber: number, name: string) {
         this.session = new Session(playersNumber);
+        this.name = name;
     }
 
     delete() {
@@ -19,10 +21,10 @@ export class Room {
         this.sysChannel?.delete();
     }
 
-    async init(interaction: CommandInteraction, name: string) {
+    async init(interaction: CommandInteraction) {
         this.session.players.set(interaction.user.id, new Player(interaction.user, true));
 
-        this.categoryChannel = await interaction.guild?.channels.create(name, {
+        this.categoryChannel = await interaction.guild?.channels.create(this.name, {
             type: "GUILD_CATEGORY",
             permissionOverwrites: [
                 {

@@ -8,7 +8,12 @@ module.exports = {
 	async execute(interaction: Interaction) {
         if (interaction.isCommand()) {
             const { commandName } = interaction;
-            commands[commandName].execute(interaction);
+            try { 
+                commands[commandName].execute(interaction); 
+            }
+            catch (e) {
+                console.log(e)
+            }
             return;
         }
 	},
