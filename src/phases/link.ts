@@ -1,27 +1,24 @@
-import { Phase } from '.';
-import { Session, Player } from '../entities'
+import { Phase, FinalPhase } from '.';
+import { Player, GameSession } from '../entities'
 import { LinkQuestion } from '../questions';
 
-export class LinkPhase implements Phase {
-    session: Session
 
-    constructor(s: Session) {
-        this.session = s;
+export class LinkPhase implements Phase {
+    session: GameSession
+
+    constructor(session: GameSession) {
+        this.session = session;
     }
 
     start(): void {
-        let lastQuestion = Array.from(this.session.players.values())
-            .pop()?.questions.at(-1)?.response || "";
+        const players = Array.from(this.session.players.values());
+        let lastQuestion = players.at(-1)?.questions.at(-1)?.response || '';
 
-        for (const [key, player] of this.session.players) {
-            const newLastQuestion = player.questions.at(-1)?.response || "";
-            if (lastQuestion != "")
-                player.ask(new LinkQuestion(lastQuestion))
-            lastQuestion = newLastQuestion;
-
-            if (lastQuestion == "")
-                throw new Error("Somebody sent an empty response");
-        }
+        players.forEach((player: Player) => {
+            const newQuestion = player.questions.at(-1)?.response || '';
+            player.ask(new LinkQuestion(lastQuestion));
+            lastQuestion = newQuestion;
+        });
     }
 
     finished(): boolean {
@@ -30,5 +27,9 @@ export class LinkPhase implements Phase {
                 return false;
         }
         return true;
+    }
+
+    next(): Phase {
+        return new FinalPhase(this.session);
     }
 }

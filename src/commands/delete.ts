@@ -16,6 +16,6 @@ export async function execute(interaction: CommandInteraction) {
             if (room.sysChannel?.id == interaction.channelId)
                 room.delete();
         });
-        interaction.reply("Channel deleted");
+        return interaction.reply("Channel deleted");
     }
 }

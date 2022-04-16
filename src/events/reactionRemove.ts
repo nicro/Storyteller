@@ -1,5 +1,5 @@
 import { MessageReaction, PartialMessageReaction, User, PartialUser, TextChannel } from 'discord.js';
-import { Bot } from './../entities';
+import { Bot } from '../entities';
 
 module.exports = {
     name: 'messageReactionRemove',

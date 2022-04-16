@@ -2,15 +2,15 @@ import { User, MessageEmbed } from 'discord.js';
 import { Question } from './../questions'
 
 export class Player {
-    user: User;
-    isCreator?: boolean;
-
-    questions: Question[];
-    questionAsked: boolean = false;
+    user: User
+    isCreator?: boolean
+    questionAsked: boolean
+    questions: Question[]
 
     constructor(user: User, isCreator?: boolean) {
         this.user = user;
         this.isCreator = isCreator;
+        this.questionAsked = false;
         this.questions = [];
     }
 

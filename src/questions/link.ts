@@ -11,7 +11,7 @@ export class LinkQuestion implements Question {
     }
 
     get() : string {
-        return "Please add some details to this story:\n" + this.prevStory;
+        return `Please add some details to this story:\n${this.prevStory}`;
     }
 
     consume(resp: string): string {

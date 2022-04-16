@@ -1,4 +1,4 @@
-export { Room } from './room'
-export { Bot } from './bot'
-export { Player } from './player'
-export { Session } from './session'
+export { Bot } from './bot';
+export { Player } from './player';
+export { GameSession } from './session';
+export { Room } from './room';

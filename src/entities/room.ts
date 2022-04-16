@@ -1,17 +1,16 @@
 import { CommandInteraction, CategoryChannel, TextChannel, Message, MessageEmbed } from 'discord.js';
-import { Player, Session } from '.';
+import { Player, GameSession } from '.';
+import { Phase, GoalPhase } from '../phases';
 
-export class Room {
+export class Room extends GameSession {
     sysChannel?: TextChannel;
-    chatChannel?: TextChannel;
-    categoryChannel?: CategoryChannel;
-    joinMessage?: Message<boolean>;
-
+    chatChannel?: TextChannel
+    categoryChannel?: CategoryChannel
+    joinMessage?: Message<boolean>
     name: string
-    session: Session;
 
-    constructor(playersNumber: number, name: string) {
-        this.session = new Session(playersNumber);
+    constructor(playersNumber: number, name: string, save?: string) {
+        super(playersNumber, save);
         this.name = name;
     }
 
@@ -21,49 +20,60 @@ export class Room {
         this.sysChannel?.delete();
     }
 
-    async init(interaction: CommandInteraction) {
-        this.session.players.set(interaction.user.id, new Player(interaction.user, true));
-
-        this.categoryChannel = await interaction.guild?.channels.create(this.name, {
+    async initCategoryChannel(handle: CommandInteraction) {
+        this.categoryChannel = await handle.guild?.channels.create(this.name, {
             type: "GUILD_CATEGORY",
             permissionOverwrites: [
                 {
-                    id: interaction.guild.roles.everyone,
+                    id: handle.guild.roles.everyone,
                 }
             ],
         });
+    }
 
-        this.sysChannel = await interaction.guild?.channels.create("system", {
+    async initSysChannel(handle: CommandInteraction) {
+        this.sysChannel = await handle.guild?.channels.create("system", {
             type: "GUILD_TEXT",
             permissionOverwrites: [
                 {
-                    id: interaction.guild.roles.everyone,
+                    id: handle.guild.roles.everyone,
                     deny: ['SEND_MESSAGES'],
-                }
-            ],
-            parent: this.categoryChannel?.id
-        });
-
-        this.chatChannel = await interaction.guild?.channels.create("chat", {
-            type: "GUILD_TEXT",
-            permissionOverwrites: [
-                {
-                    id: interaction.guild.roles.everyone,
                 }
             ],
             parent: this.categoryChannel?.id
         });
     }
 
+    async initChatChannel(handle: CommandInteraction) {
+        this.chatChannel = await handle.guild?.channels.create("chat", {
+            type: "GUILD_TEXT",
+            permissionOverwrites: [
+                {
+                    id: handle.guild.roles.everyone,
+                }
+            ],
+            parent: this.categoryChannel?.id
+        });
+    }
+    
+
+    async init(handle: CommandInteraction) {
+        this.players.set(handle.user.id, new Player(handle.user, true));
+
+        await this.initCategoryChannel(handle);
+        await this.initSysChannel(handle);
+        await this.initChatChannel(handle);
+    }
+
     async updateActivePlayers() {
         let newMessage: string = '';
         let counter: number = 0;
 
-        this.session.players.forEach((p: Player) => {
+        this.players.forEach((p: Player) => {
             newMessage += `${1 + counter++}. ${p.user.username}\n`;
         });
 
-        while (counter < this.session.playersLimit) {
+        while (counter < this.playersLimit) {
             newMessage += `${1 + counter++}.\n`;
         }
 
@@ -74,7 +84,7 @@ export class Room {
             .setTitle('Check to join!')
             .setDescription('To start the game, the admin needs to type /start_game command!')
             .setAuthor({ name: 'Storyteller', iconURL: icon, url: 'https://discord.js.org' })
-            .addField(`Active members (${this.session.players.size}/${this.session.playersLimit})`, newMessage)
+            .addField(`Active members (${this.players.size}/${this.playersLimit})`, newMessage)
             .setTimestamp();
 
         if (this.joinMessage) {
@@ -85,23 +95,23 @@ export class Room {
     }
 
     async addPlayer(id: string) {
-        if (this.session.players.has(id))
+        if (this.players.has(id))
             return;
 
         let user = await this.chatChannel?.client.users.fetch(id);
         if (!user || user.bot) return;
-        this.session.players.set(id, new Player(user));
+        this.players.set(id, new Player(user));
         await this.updateActivePlayers();
     }
 
     async removePlayer(id: string) {
-        if (!this.session.players.has(id))
+        if (!this.players.has(id))
             return;
 
         let user = await this.chatChannel?.client.users.fetch(id);
-        if (!user || this.session.players.get(id)?.isCreator) return;
+        if (!user || this.players.get(id)?.isCreator) return;
 
-        this.session.players.delete(id);
+        this.players.delete(id);
         await this.updateActivePlayers();
     }
 }

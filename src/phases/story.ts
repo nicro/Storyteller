@@ -1,12 +1,12 @@
 import { Phase, LinkPhase } from '.';
-import { Session, Player } from '../entities'
+import { GameSession, Player } from '../entities';
 import { StoryQuestion } from '../questions';
 
 export class StoryPhase implements Phase {
-    session: Session
+    session: GameSession
 
-    constructor(s: Session) {
-        this.session = s;
+    constructor(session: GameSession) {
+        this.session = session;
     }
 
     start(): void {
@@ -21,7 +21,7 @@ export class StoryPhase implements Phase {
         return true;
     }
 
-    next(): Phase { 
-        return new LinkPhase(this.session) 
+    next(): Phase {
+        return new LinkPhase(this.session);
     }
 }

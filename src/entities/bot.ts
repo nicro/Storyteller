@@ -1,5 +1,8 @@
-import { Room, Player } from '.'
+import { Room } from '.';
 import { CommandInteraction } from 'discord.js';
+
+import fs from 'fs';
+import config from './../config';
 
 export class Bot {
     private static instance: Bot
@@ -9,17 +12,23 @@ export class Bot {
         this.rooms = [];
     }
 
-    public static Instance()
-    {
+    public static Instance() {
         return this.instance || (this.instance = new this());
     }
     
-    async createRoom(interaction: CommandInteraction, name: string, playersNumber: number) {
-        var newgame = new Room(playersNumber, name);
-        await newgame.init(interaction);
-        await newgame.updateActivePlayers();
-        this.rooms.push(newgame);
-        return newgame;
+    async loadRoom(interaction: CommandInteraction, oldName: string, newName: string, playersNumber: number) {
+        const filename = fs.readdirSync(config.SAVES_DIR).find((n: string) => n.startsWith(oldName));
+        if (filename) {
+            const room = this.createRoom(interaction, newName, playersNumber);
+        }
+    }
+
+    async createRoom(interaction: CommandInteraction, name: string, playersNumber: number, save?: string) {
+        let game = new Room(playersNumber, name, save);
+        await game.init(interaction);
+        await game.updateActivePlayers();
+        this.rooms.push(game);
+        return game;
     }
 
     getRoom(channelId: string): Room | undefined {

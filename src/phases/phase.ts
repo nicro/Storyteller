@@ -1,7 +1,7 @@
-import { Session } from '../entities'
+import { GameSession } from './../entities';
 
 export interface Phase {
-    session: Session
+    session: GameSession
 
     start: () => void
     finished: () => boolean
