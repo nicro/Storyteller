@@ -1,20 +1,64 @@
-import { Player } from '.';
-import { Phase, GoalPhase } from '../phases'
+import { Player, PlayerData } from '.';
+import { Phase, GoalPhase, FinalPhase } from '../phases'
+import { SomeQuestion } from '../questions'
+
+import config from '../config'
+import fs from 'fs'
+import path from 'path'
 
 export abstract class GameSession {
     playersLimit: number
     players: Map<string, Player>
     phase: Phase
+    save?: string
 
     constructor(playersNumber: number, save?: string) {
         this.playersLimit = playersNumber;
         this.players = new Map<string, Player>();
         if (save) {
-            //toDo: load save and skip all phases except the latest
-            this.phase = new GoalPhase(this);
+            this.phase = new FinalPhase(this);
+            this.save = save;
         }
         else
             this.phase = new GoalPhase(this);
+    }
+
+    start() {
+        if (this.save)
+            this.load(this.save);
+        this.phase.start();
+    }
+
+    load(save: string) {
+
+        const filename = fs.readdirSync(path.resolve('./', config.SAVES_DIR))
+            .find((n: string) => n.startsWith(save));
+
+        if (!filename) {
+            console.log('filename not found');
+            return;
+        }
+
+        let saveObject: Array<PlayerData> = JSON.parse(
+            fs.readFileSync(config.SAVES_DIR + filename, 'utf8')
+        );
+        
+        let cnt: number = 0;
+        this.players.forEach((player: Player) => {
+            if (cnt < saveObject.length)
+            {
+                const data: PlayerData = saveObject[cnt++];
+                data.questions.forEach((s: string) => {
+                    player.questions.push(new SomeQuestion(s));
+                });
+            }
+        })
+    }
+
+    serialize(): Array<PlayerData> {
+        let arr: PlayerData[] = [];
+        this.players.forEach(player => arr.push(player.serialize()));
+        return arr;
     }
 
     refreshProgress(): void {
@@ -41,12 +85,6 @@ export abstract class GameSession {
                 return value;
         }
         throw new Error("no creator in a room");
-    }
-    
-    toJson(): string {
-        let result: string[] = [];
-        this.players.forEach(player => result.push(player.toJson()));
-        return `[${result.join(',')}]`;
     }
 
     findPlayer(id: string) {

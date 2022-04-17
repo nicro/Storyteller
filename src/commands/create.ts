@@ -30,10 +30,11 @@ export async function execute(handle: CommandInteraction) {
 	if (!handle.guild)
 		throw new Error("guild=null");
 
-	const roomName: string = handle.options.get('name')?.value as string || 'new_room';
+	const roomName: string = handle.options.get('name')?.value as string || 'NewRoom';
 	const playersNumber: number = handle.options.get('number')?.value as number || 3;
 
-	const save = handle.options.get('number')?.value as string | undefined;
+	let opt = handle.options.get('save');
+	let save = opt ? opt?.value as string : undefined;
 
 	let room = await Bot.Instance().createRoom(handle, roomName, playersNumber, save);
 	return handle.reply(`New room <#${room?.sysChannel?.id}> created`);

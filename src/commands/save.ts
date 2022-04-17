@@ -17,12 +17,12 @@ export async function execute(interaction: CommandInteraction) {
 
 	const filename = `${config.SAVES_DIR}${room.name}_${getRandomId().substring(8)}.json`;
 
-	const data = room?.toJson();
+	const data = room?.serialize();
 	if (!data) return interaction.reply('session is null');
 
 	if (!fs.existsSync(config.SAVES_DIR))
 		fs.mkdirSync(config.SAVES_DIR);
 
-	fs.writeFileSync(filename, data);
+	fs.writeFileSync(filename, JSON.stringify(data));
 	return interaction.reply('session saved!');
 }

@@ -16,13 +16,6 @@ export class Bot {
         return this.instance || (this.instance = new this());
     }
     
-    async loadRoom(interaction: CommandInteraction, oldName: string, newName: string, playersNumber: number) {
-        const filename = fs.readdirSync(config.SAVES_DIR).find((n: string) => n.startsWith(oldName));
-        if (filename) {
-            const room = this.createRoom(interaction, newName, playersNumber);
-        }
-    }
-
     async createRoom(interaction: CommandInteraction, name: string, playersNumber: number, save?: string) {
         let game = new Room(playersNumber, name, save);
         await game.init(interaction);

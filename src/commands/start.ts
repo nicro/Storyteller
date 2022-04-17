@@ -15,7 +15,8 @@ export async function execute(interaction: CommandInteraction) {
     await Bot.Instance().rooms.forEach((room: Room) => {
         if (room.sysChannel?.id == interaction.channelId && !startFlag) {
             room.chatChannel?.send("Game is starting....");
-            room.phase.start();
+            //room.phase.start();
+            room.start();
             startFlag = true;
             return interaction.reply("Game started");
         }

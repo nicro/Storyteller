@@ -15,6 +15,6 @@ export async function execute(interaction: CommandInteraction) {
     let room = Bot.Instance().getRoom(interaction.channelId);
     if (!room) return interaction.reply('unknown session');
 
-    fs.writeFileSync(filename, room?.toJson() ||'json parsing failed');
+    fs.writeFileSync(filename, JSON.stringify(room?.serialize()) ||'json parsing failed');
     return interaction.reply({ files: [filename] });
 }

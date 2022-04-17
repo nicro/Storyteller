@@ -1,6 +1,5 @@
 import { CommandInteraction, CategoryChannel, TextChannel, Message, MessageEmbed } from 'discord.js';
 import { Player, GameSession } from '.';
-import { Phase, GoalPhase } from '../phases';
 
 export class Room extends GameSession {
     sysChannel?: TextChannel;

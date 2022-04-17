@@ -1,6 +1,11 @@
 import { User, MessageEmbed } from 'discord.js';
 import { Question } from './../questions'
 
+export type PlayerData = {
+    isCreator: boolean
+    questions: string[]
+}
+
 export class Player {
     user: User
     isCreator?: boolean
@@ -14,11 +19,15 @@ export class Player {
         this.questions = [];
     }
 
-    toJson(): string {
-        return JSON.stringify({
-            type: this.isCreator ? 'creator' : 'player',
-            response: this.questions.at(-1)?.response || 'no response'
-        });
+    serialize(): PlayerData {
+
+        let qs: string[] = [];
+        this.questions.forEach((q: Question) => qs.push(q.response));
+
+        return {
+            isCreator: this.isCreator || false,
+            questions: qs,
+        }
     }
 
     ask(question: Question) {
