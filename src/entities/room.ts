@@ -81,7 +81,7 @@ export class Room extends GameSession {
         const embed = new MessageEmbed()
             .setColor('#c7344f')
             .setTitle('Check to join!')
-            .setDescription('To start the game, the admin needs to type /start_game command!')
+            .setDescription('To start the game, the admin needs to type **/start** command!')
             .setAuthor({ name: 'Storyteller', iconURL: icon, url: 'https://discord.js.org' })
             .addField(`Active members (${this.players.size}/${this.playersLimit})`, newMessage)
             .setTimestamp();

@@ -1,19 +1,14 @@
 import { Interaction } from 'discord.js';
-import * as commandModules from '../commands'
+import { commands } from '../commands';
+import { Command } from '../commands/command';
 
-const commands = Object(commandModules);
+const name = 'interactionCreate';
 
-module.exports = {
-	name: 'interactionCreate',
-	async execute(interaction: Interaction) {
-        if (interaction.isCommand()) {
-            const { commandName } = interaction;
-            try { 
-                commands[commandName].execute(interaction); 
-            }
-            catch (e) {
-                console.log(e)
-            }
-        }
-	},
-};
+async function execute(handle: Interaction) {
+    if (handle.isCommand()) {
+        const { commandName } = handle;
+        commands.find((c: Command) => c.name === commandName)?.execute(handle);
+    }
+}
+
+export { name, execute };

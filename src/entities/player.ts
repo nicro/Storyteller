@@ -57,7 +57,7 @@ export class Player {
                 this.questionAsked = true;
                 break;
             }
-            if (!question.isAnswered) {
+            if (!question.isAnswered && msg != '') {
                 let feedback: string = question.consume(msg);
 
                 let embed = new MessageEmbed()

@@ -1,26 +1,33 @@
 import { CommandInteraction, ApplicationCommandData, MessageEmbed } from 'discord.js';
 import { trimPrefix } from './../utils/random';
+import { Command } from './command'
 
-import fs from 'fs';
 import config from './../config'
+import fs from 'fs';
 
-export const data: ApplicationCommandData = {
-    name: 'list',
-    description: 'Lists available sessions!'
-};
 
-export async function execute(interaction: CommandInteraction) {
-    let num: number = 1;
-    let response: string = '';
+export class ListCommand implements Command {
 
-    fs.readdirSync(config.SAVES_DIR).forEach((name: string) => {
-        response += `${num++}: ${trimPrefix(name)}\n`;
-    });
+    name: string = 'list';
 
-    let embed = new MessageEmbed()
-        .setColor('#0000ff')
-        .setTitle('Following rooms are saved')
-        .setDescription(response);
+    data: ApplicationCommandData = {
+        name: 'list',
+        description: 'Lists available sessions!'
+    };
 
-    return interaction.reply({ embeds: [embed] });
+    async execute(handle: CommandInteraction) {
+        let num: number = 1;
+        let response: string = '';
+    
+        fs.readdirSync(config.SAVES_DIR).forEach((name: string) => {
+            response += `${num++}: ${trimPrefix(name)}\n`;
+        });
+    
+        let embed = new MessageEmbed()
+            .setColor('#0000ff')
+            .setTitle('Following rooms are saved')
+            .setDescription(response);
+    
+        return handle.reply({ embeds: [embed] });
+    }
 }

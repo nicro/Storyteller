@@ -1,9 +1,6 @@
 import { Room } from '.';
 import { CommandInteraction } from 'discord.js';
 
-import fs from 'fs';
-import config from './../config';
-
 export class Bot {
     private static instance: Bot
     rooms: Room[]

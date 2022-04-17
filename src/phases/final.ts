@@ -25,8 +25,9 @@ export class FinalPhase implements Phase {
                     { name: 'First part', value: firstStory },
                     { name: 'Second part', value: lastQuestion },
                 );
-            player.user.send({ embeds: [embed] });
 
+            player.user.send({ embeds: [embed] });
+            
             lastQuestion = newQuestion;
         });
     }

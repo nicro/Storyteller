@@ -1,7 +1,18 @@
-export * as ping from './ping'
-export * as create from './create'
-export * as start from './start'
-export * as delete from './delete'
-export * as export from './export'
-export * as save from './save'
-export * as list from './list'
+import { Command } from './command'
+import { CreateCommand } from './create'
+import { DeleteCommand } from './delete'
+import { ExportCommand } from './export'
+import { ListCommand } from './list'
+import { SaveCommand } from './save'
+import { StartCommand } from './start'
+
+const commands: Array<Command> = [
+    new CreateCommand(),
+    new StartCommand(),
+    new DeleteCommand(),
+    new ExportCommand(),
+    new SaveCommand(),
+    new ListCommand()
+];
+
+export { commands, Command }
