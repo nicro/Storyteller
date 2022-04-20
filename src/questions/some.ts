@@ -4,15 +4,15 @@ export class SomeQuestion implements Question {
     isAnswered: boolean = true
     response: string
 
-    constructor (response: string) {
-    	this.response = response;
+    constructor(response: string) {
+        this.response = response;
     }
 
-    get (): string {
-    	return '';
+    get(): string {
+        return '';
     }
 
-    consume (resp: string): string {
-    	return '';
+    consume(resp: string): string {
+        return '';
     }
 }

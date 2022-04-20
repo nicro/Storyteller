@@ -3,7 +3,7 @@ import { Bot } from '../entities'
 
 const name = 'messageReactionRemove'
 
-async function execute (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
+async function execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
     const channel = reaction.message.channel as TextChannel;
 
     const room = Bot.Instance().getRoom(channel.id);

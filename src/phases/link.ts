@@ -6,30 +6,30 @@ export class LinkPhase implements Phase {
     session: GameSession
 
     constructor (session: GameSession) {
-    	this.session = session;
+        this.session = session;
     }
 
-    start (): void {
-    	const players = Array.from(this.session.players.values())
-    	let lastQuestion = players.at(-1)?.questions.at(-1)?.response || '';
+    start(): void {
+        const players = Array.from(this.session.players.values());
+        let lastQuestion = players.at(-1)?.questions.at(-1)?.response || '';
 
-    	players.forEach((player: Player) => {
-    		const newQuestion = player.questions.at(-1)?.response || '';
-    		player.ask(new LinkQuestion(lastQuestion));
-    		lastQuestion = newQuestion;
-    	})
+        players.forEach((player: Player) => {
+            const newQuestion = player.questions.at(-1)?.response || '';
+            player.ask(new LinkQuestion(lastQuestion));
+            lastQuestion = newQuestion;
+        });
     }
 
-    finished (): boolean {
-    	for (const [_, player] of this.session.players) {
-    		if (player.questionAsked) {
+    finished(): boolean {
+        for (const [_, player] of this.session.players) {
+            if (player.questionAsked) {
                 return false;
             }
-    	}
-    	return true;
+        }
+        return true;
     }
 
-    next (): Phase {
-    	return new FinalPhase(this.session);
+    next(): Phase {
+        return new FinalPhase(this.session);
     }
 }

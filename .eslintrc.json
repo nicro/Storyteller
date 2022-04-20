@@ -18,8 +18,6 @@
     "rules": {
         "indent": ["error", 4],
         "no-unused-vars": "off",
-        "no-tabs": "off",
-        "no-mixed-spaces-and-tabs": "off",
         "space-before-function-paren": "off",
         "semi": "off"
     }

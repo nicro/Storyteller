@@ -1,12 +1,12 @@
-export function getRandomId (): string {
+export function getRandomId(): string {
     return (performance.now().toString(36) + Math.random().toString(36)).replace(/\./g, '');
 }
 
-export function reverseString (str: string) {
+export function reverseString(str: string) {
     return str.split('').reverse().join('');
 }
 
-export function trimPrefix (str: string): string {
+export function trimPrefix(str: string): string {
     str = reverseString(str);
     const del: number = str.indexOf('_');
     if (del !== -1) {

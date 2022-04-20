@@ -5,24 +5,24 @@ import { StoryQuestion } from '../questions'
 export class StoryPhase implements Phase {
     session: GameSession
 
-    constructor (session: GameSession) {
-    	this.session = session;
+    constructor(session: GameSession) {
+        this.session = session;
     }
 
-    start (): void {
-    	this.session.players.forEach((p: Player) => p.ask(new StoryQuestion()));
+    start(): void {
+        this.session.players.forEach((p: Player) => p.ask(new StoryQuestion()));
     }
 
-    finished (): boolean {
-    	for (const [_, player] of this.session.players) {
-    		if (player.questionAsked) {
+    finished(): boolean {
+        for (const [_, player] of this.session.players) {
+            if (player.questionAsked) {
                 return false;
             }
-    	}
-    	return true;
+        }
+        return true;
     }
 
-    next (): Phase {
-    	return new LinkPhase(this.session);
+    next(): Phase {
+        return new LinkPhase(this.session);
     }
 }

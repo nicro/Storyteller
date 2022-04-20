@@ -6,18 +6,18 @@ export class GoalPhase implements Phase {
     session: GameSession
 
     constructor (session: GameSession) {
-    	this.session = session;
+        this.session = session;
     }
 
-    start (): void {
-    	this.session.getCreator().ask(new GoalQuestion());
+    start(): void {
+        this.session.getCreator().ask(new GoalQuestion());
     }
 
-    finished (): boolean {
-    	return !this.session.getCreator().questionAsked;
+    finished(): boolean {
+        return !this.session.getCreator().questionAsked;
     }
 
-    next (): Phase {
-    	return new StoryPhase(this.session);
+    next(): Phase {
+        return new StoryPhase(this.session);
     }
 }
