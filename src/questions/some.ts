@@ -5,14 +5,14 @@ export class SomeQuestion implements Question {
     response: string
 
     constructor (response: string) {
-    	this.response = response
+    	this.response = response;
     }
 
     get (): string {
-    	return ''
+    	return '';
     }
 
     consume (resp: string): string {
-    	return ''
+    	return '';
     }
 }

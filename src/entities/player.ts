@@ -13,57 +13,59 @@ export class Player {
     questions: Question[]
 
     constructor (user: User, isCreator?: boolean) {
-    	this.user = user
-    	this.isCreator = isCreator
-    	this.questionAsked = false
-    	this.questions = []
+    	this.user = user;
+    	this.isCreator = isCreator;
+    	this.questionAsked = false;
+    	this.questions = [];
     }
 
     serialize (): PlayerData {
-    	const qs: string[] = []
-    	this.questions.forEach((q: Question) => qs.push(q.response))
+    	const qs: string[] = [];
+    	this.questions.forEach((q: Question) => qs.push(q.response));
 
     	return {
     		isCreator: this.isCreator || false,
     		questions: qs
-    	}
+    	};
     }
 
     ask (question: Question) {
-    	this.questions.push(question)
+    	this.questions.push(question);
     	if (!this.questionAsked) {
     		for (const question of this.questions) {
     			if (!question.isAnswered) {
     				const embed = new MessageEmbed()
     					.setColor('#0000ff')
     					.setTitle(question.get())
-    					.setDescription('The next direct message to this bot will be considered as answer')
-    				this.user.send({ embeds: [embed] })
-    				this.questionAsked = true
-    				break
+    					.setDescription('The next direct message to this bot will be considered as answer');
+    				this.user.send({ embeds: [embed] });
+    				this.questionAsked = true;
+    				break;
     			}
     		}
     	}
     }
 
     handleMessage (msg: string) {
-    	if (!this.questionAsked) { return }
+    	if (!this.questionAsked) return;
 
     	for (const question of this.questions) {
     		if (!this.questionAsked) {
-    			this.user.send(question.get())
-    			this.questionAsked = true
-    			break
+    			this.user.send(question.get());
+    			this.questionAsked = true;
+    			break;
     		}
     		if (!question.isAnswered && msg !== '') {
-    			const feedback: string = question.consume(msg)
+    			const feedback: string = question.consume(msg);
 
     			const embed = new MessageEmbed()
     				.setColor('#00ff00')
-    				.setTitle(feedback)
+    				.setTitle(feedback);
 
-    			this.user.send({ embeds: [embed] })
-    			if (question.isAnswered) { this.questionAsked = false }
+    			this.user.send({ embeds: [embed] });
+    			if (question.isAnswered) {
+                    this.questionAsked = false;
+                }
     		}
     	}
     }

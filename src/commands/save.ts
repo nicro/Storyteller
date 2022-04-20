@@ -12,17 +12,19 @@ export default class implements Command {
 	data: ApplicationCommandData = { name: 'save', description: 'Save a room session!' };
 
 	async execute(interaction: CommandInteraction) {
-		const room = Bot.Instance().getRoom(interaction.channelId)
-		if (!room) return interaction.reply('unknown room')
+	    const room = Bot.Instance().getRoom(interaction.channelId);
+	    if (!room) return interaction.reply('unknown room');
 
-		const filename = `${config.SAVES_DIR}${room.name}_${getRandomId().substring(8)}.json`
+	    const filename = `${config.SAVES_DIR}${room.name}_${getRandomId().substring(8)}.json`;
 
-		const data = room?.serialize()
-		if (!data) return interaction.reply('session is null')
+	    const data = room?.serialize();
+	    if (!data) return interaction.reply('session is null');
 
-		if (!fs.existsSync(config.SAVES_DIR)) { fs.mkdirSync(config.SAVES_DIR) }
+	    if (!fs.existsSync(config.SAVES_DIR)) {
+	        fs.mkdirSync(config.SAVES_DIR);
+	    };
 
-		fs.writeFileSync(filename, JSON.stringify(data))
-		return interaction.reply('session saved!')
+	    fs.writeFileSync(filename, JSON.stringify(data));
+	    return interaction.reply('session saved!');
 	}
 }

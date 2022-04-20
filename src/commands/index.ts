@@ -8,12 +8,12 @@ import SaveCommand from './save'
 import StartCommand from './start'
 
 const commands: Array<Command> = [
-	new CreateCommand(),
-	new StartCommand(),
-	new DeleteCommand(),
-	new ExportCommand(),
-	new SaveCommand(),
-	new ListCommand()
-]
+    new CreateCommand(),
+    new StartCommand(),
+    new DeleteCommand(),
+    new ExportCommand(),
+    new SaveCommand(),
+    new ListCommand()
+];
 
 export { commands, Command }

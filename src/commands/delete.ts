@@ -11,14 +11,18 @@ export default class implements Command {
     };
 
     async execute (handle: CommandInteraction) {
-    	if (!handle.guild) { throw new Error('guild=null') }
+    	if (!handle.guild) {
+            throw new Error('guild=null');
+        }
 
-    	const opt = handle.options.get('name_of_room')
+    	const opt = handle.options.get('name_of_room');
     	if (!opt) {
     		Bot.Instance().rooms.forEach((room: Room) => {
-    			if (room.sysChannel?.id === handle.channelId) { room.delete() }
+    			if (room.sysChannel?.id === handle.channelId) {
+                    room.delete();
+                }
     		})
-    		return handle.reply('Channel deleted')
+    		return handle.reply('Channel deleted');
     	}
     }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import { CommandInteraction, ApplicationCommandData } from 'discord.js'
 import { Bot } from '../entities'
 import { Command } from './command'
@@ -32,15 +31,17 @@ export default class implements Command {
 	};
 
 	async execute (handle: CommandInteraction) {
-	    if (!handle.guild) { throw new Error('guild=null') }
+	    if (!handle.guild) {
+	        throw new Error('guild=null');
+	    }
 
-	    const roomName: string = handle.options.get('name')?.value as string || 'NewRoom'
-	    const playersNumber: number = handle.options.get('number')?.value as number || 3
+	    const roomName: string = handle.options.get('name')?.value as string || 'NewRoom';
+	    const playersNumber: number = handle.options.get('number')?.value as number || 3;
 
-	    const opt = handle.options.get('save')
-	    const save = opt ? opt?.value as string : undefined
+	    const opt = handle.options.get('save');
+	    const save = opt ? opt?.value as string : undefined;
 
-	    const room = await Bot.Instance().createRoom(handle, roomName, playersNumber, save)
-	    return handle.reply(`New room <#${room?.sysChannel?.id}> created`)
+	    const room = await Bot.Instance().createRoom(handle, roomName, playersNumber, save);
+	    return handle.reply(`New room <#${room?.sysChannel?.id}> created`);
 	}
 }

@@ -12,12 +12,12 @@ export default class implements Command {
     };
 
     async execute (interaction: CommandInteraction) {
-    	const room = Bot.Instance().getRoom(interaction.channelId)
-    	if (!room) return interaction.reply('unknown session')
+    	const room = Bot.Instance().getRoom(interaction.channelId);
+    	if (!room) return interaction.reply('unknown session');
 
-    	const filename = `/tmp/${room.name}.json`
+    	const filename = `/tmp/${room.name}.json`;
 
-    	fs.writeFileSync(filename, JSON.stringify(room?.serialize()) || 'json parsing failed')
-    	return interaction.reply({ files: [filename] })
+    	fs.writeFileSync(filename, JSON.stringify(room?.serialize()) || 'json parsing failed');
+    	return interaction.reply({ files: [filename] });
     }
 }
