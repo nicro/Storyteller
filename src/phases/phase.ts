@@ -1,4 +1,4 @@
-import { GameSession } from './../entities';
+import { GameSession } from './../entities'
 
 export interface Phase {
     session: GameSession
