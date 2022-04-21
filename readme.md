@@ -25,6 +25,6 @@ Here is a list of available commands.
 | [/export](src/commands/export.ts)   | Export game data as json file |
 | [/list](src/commands/list.ts)       | List available saves          |
 | [/start](src/commands/start.ts)     | Start a game session          |
-| [/restart](src\commands/restart.ts) | Restart a game session        |
+| [/restart](src/commands/restart.ts) | Restart a game session        |
 | [/save](src/commands/save.ts)       | Create a new save             |
 | [/wipe](src/commands/wipe.ts)       | Wipe ALL game channels        |
