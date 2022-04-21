@@ -3,8 +3,6 @@ import { Bot } from '../entities'
 import { Command } from './command'
 
 export default class implements Command {
-    name: string = 'create';
-
     data: ApplicationCommandData = {
         name: 'create',
         description: 'Creates a new storyteller room!',

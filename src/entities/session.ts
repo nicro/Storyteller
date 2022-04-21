@@ -9,28 +9,28 @@ import path from 'path'
 export abstract class GameSession {
     playersLimit: number
     players: Map<string, Player>
-    phase: Phase
+    phase!: Phase
     save?: string
 
     constructor(playersNumber: number, save?: string) {
         this.playersLimit = playersNumber;
         this.players = new Map<string, Player>();
-        if (save) {
-            this.phase = new FinalPhase(this);
-            this.save = save;
-        } else {
-            this.phase = new GoalPhase(this);
-        }
+        this.save = save;
+        this.resetPhase();
     }
 
-    start() {
+    resetPhase(): void {
+        this.phase = this.save ? new FinalPhase(this) : new GoalPhase(this);
+    }
+
+    start(): void {
         if (this.save) {
             this.load(this.save);
         }
         this.phase.start();
     }
 
-    load(save: string) {
+    load(save: string): void {
         const filename = fs.readdirSync(path.resolve('./', config.SAVES_DIR))
             .find((n: string) => n.startsWith(save));
 
@@ -86,7 +86,7 @@ export abstract class GameSession {
         throw new Error('no creator in a room');
     }
 
-    findPlayer(id: string) {
+    findPlayer(id: string): Player | undefined {
         for (const [_, player] of this.players) {
             if (player.user.id === id) {
                 return player;

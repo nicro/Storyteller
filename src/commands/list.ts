@@ -6,8 +6,6 @@ import config from './../config'
 import fs from 'fs'
 
 export default class implements Command {
-    name: string = 'list';
-
     data: ApplicationCommandData = {
         name: 'list',
         description: 'Lists available sessions!'

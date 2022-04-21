@@ -3,8 +3,6 @@ import { Bot, Room } from '../entities'
 import { Command } from './command'
 
 export default class implements Command {
-    name: string = 'start';
-
     data: ApplicationCommandData = {
         name: 'start',
         description: 'Starts the game phase'
@@ -15,18 +13,11 @@ export default class implements Command {
             throw new Error('guild=null');
         }
 
-        let startFlag: boolean = false;
-        await Bot.Instance().rooms.forEach((room: Room) => {
-            if (room.sysChannel?.id === interaction.channelId && !startFlag) {
-                room.chatChannel?.send('Game is starting....');
-                room.start();
-                startFlag = true;
-                return interaction.reply('Game started');
-            }
-        })
+        const room = Bot.Instance().rooms.find((room: Room) => room.sysChannel?.id === interaction.channelId);
+        if (!room) return interaction.reply('Use this command only in a game room');
 
-        if (!startFlag) {
-            return interaction.reply('Use this command in a game room');
-        }
+        room.chatChannel?.send('Game is starting....');
+        room.start();
+        return interaction.reply('Game started');
     }
 }

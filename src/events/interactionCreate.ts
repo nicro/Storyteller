@@ -7,7 +7,7 @@ const name = 'interactionCreate'
 async function execute(handle: Interaction) {
     if (handle.isCommand()) {
         const { commandName } = handle;
-        commands.find((c: Command) => c.name === commandName)?.execute(handle);
+        commands.find((c: Command) => c.data.name === commandName)?.execute(handle);
     }
 }
 

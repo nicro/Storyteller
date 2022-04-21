@@ -4,8 +4,6 @@ import { Command } from './command'
 import fs from 'fs'
 
 export default class implements Command {
-    name: string = 'export';
-
     data: ApplicationCommandData = {
         name: 'export',
         description: 'Export a room session!'

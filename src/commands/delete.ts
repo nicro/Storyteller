@@ -3,8 +3,6 @@ import { Bot, Room } from '../entities'
 import { Command } from './command'
 
 export default class implements Command {
-    name: string = 'delete';
-
     data: ApplicationCommandData = {
         name: 'delete',
         description: 'Delete a storyteller room!'

@@ -7,9 +7,10 @@ import fs from 'fs'
 import config from './../config'
 
 export default class implements Command {
-    name: string = 'save';
-
-    data: ApplicationCommandData = { name: 'save', description: 'Save a room session!' };
+    data: ApplicationCommandData = {
+        name: 'save',
+        description: 'Save a room session!'
+    };
 
     async execute(interaction: CommandInteraction) {
         const room = Bot.Instance().getRoom(interaction.channelId);
