@@ -9,17 +9,22 @@ Storyteller is a discord bot, which helps you and your friends to create a rolep
 
 The bot requires some [environment variables](config.md) to work correctly.
 
+```bash
+npm i
+npm start
+```
+
 ## 🧬 Commands
 
 Here is a list of available commands.
 
-| Command                             | Description                    |
-| :-------------------------------:   | :----------------------------: |
-| [/create](src\commands\create.ts)   | Creates a new room             |
-| [/delete](src\commands\delete.ts)   | Deltes a room                  |
-| [/export](src\commands\export.ts)   | Exports game data as json file |
-| [/list](src\commands\list.ts)       | Lists available saves          |
-| [/start](src\commands\start.ts)     | Starts a game session          |
-| [/restart](src\commands\restart.ts) | Restart a game session         |
-| [/save](src\commands\save.ts)       | Creates a new save             |
-| [/wipe](src\commands\wipe.ts)       | Wipes ALL game channels        |
+| Command                             | Description                   |
+| :-------------------------------:   | :---------------------------: |
+| [/create](src/commands/create.ts)   | Create a new room             |
+| [/delete](src/commands/delete.ts)   | Delete a room                 |
+| [/export](src/commands/export.ts)   | Export game data as json file |
+| [/list](src/commands/list.ts)       | List available saves          |
+| [/start](src/commands/start.ts)     | Start a game session          |
+| [/restart](src\commands/restart.ts) | Restart a game session        |
+| [/save](src/commands/save.ts)       | Create a new save             |
+| [/wipe](src/commands/wipe.ts)       | Wipe ALL game channels        |
